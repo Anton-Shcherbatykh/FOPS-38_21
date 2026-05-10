@@ -75,6 +75,8 @@ sudo mv ./kubectl /usr/local/bin/kubectl```
 
 ### Ответ 1.
 
+1. Устанавливаем MicroK8S на виртуальную машину
+![alt text](Pictures/pic08.jpg)
 
 
 ### Задание 2. Установка и настройка локального kubectl
