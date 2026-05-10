@@ -76,11 +76,39 @@ sudo mv ./kubectl /usr/local/bin/kubectl```
 ### Ответ 1.
 
 1. Устанавливаем MicroK8S на виртуальную машину
-![alt text](Pictures/pic08.jpg)
+![alt text](Pictures/pic01.jpg)
 
+2. Устанавливаем dashboard
+
+![alt text](Pictures/pic02.jpg)
+
+3. Сгенерировал сертификат для admin-user
+
+![alt text](Pictures/pic03.jpg)
+
+4. Настроил проброс портов и проверил подключение на ВМ - всё в порядке
+
+![alt text](Pictures/pic05.jpg)
+
+![alt text](Pictures/pic04.jpg)
+
+---
 
 ### Задание 2. Установка и настройка локального kubectl
 1. Установить на локальную машину kubectl.
 2. Настроить локально подключение к кластеру.
 3. Подключиться к дашборду с помощью port-forward.
 
+### Ответ 2.
+
+1. Установил на локальную машину kubectl
+
+![alt text](Pictures/pic06.jpg)
+
+2. Настроил локально подключение к кластеру
+
+![alt text](Pictures/pic08.jpg)
+
+3. Подключился к dashboard с помощью port-forward
+
+![alt text](Pictures/pic07.jpg)
