@@ -41,7 +41,7 @@
 3. Создать Service с именем netology-svc и подключить к netology-web.
 4. Подключиться локально к Service с помощью kubectl port-forward и вывести значение (curl или в браузере).
 
-### Ответ 1.
+### Ответ 2.
 
 1. В текстовом редакторе Notepad++ на локальной машине создаю YAML-манифесты Pod ```netology-web``` и Service ```netology-svc```. Использую *image — gcr.io/kubernetes-e2e-test-images/echoserver:2.2*
 
