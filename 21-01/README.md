@@ -4,6 +4,8 @@
 
 Для экспериментов и валидации ваших решений вам нужно подготовить тестовую среду для работы с Kubernetes. Оптимальное решение — развернуть на рабочей машине или на отдельной виртуальной машине MicroK8S.
 
+---
+
 **Чеклист готовности к домашнему заданию**
 
 Личный компьютер с ОС Linux или MacOS
@@ -11,6 +13,8 @@
 или
 
 ВМ c ОС Linux в облаке либо ВМ на локальной машине для установки MicroK8S
+
+---
 
 **Инструкция к заданию**
 
@@ -43,24 +47,38 @@
 
 - обновить сертификаты ```sudo microk8s refresh-certs --cert front-proxy-client.crt```.
 
-Установка kubectl:
+- Установка kubectl:
 
 ```curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl;
 chmod +x ./kubectl;
 sudo mv ./kubectl /usr/local/bin/kubectl```
 
-настройка автодополнения в текущую сессию ```bash source <(kubectl completion bash)```;
-добавление автодополнения в командную оболочку ```bash echo "source <(kubectl completion bash)" >> ~/.bashrc```.
+- настройка автодополнения в текущую сессию ```bash source <(kubectl completion bash)```;
+- добавление автодополнения в командную оболочку ```bash echo "source <(kubectl completion bash)" >> ~/.bashrc```.
+
+---
+
 Инструменты и дополнительные материалы, которые пригодятся для выполнения задания
-Инструкция по установке MicroK8S.
-Инструкция по установке автодополнения kubectl.
-Шпаргалка по kubectl.
-Задание 1. Установка MicroK8S
-Установить MicroK8S на локальную машину или на удалённую виртуальную машину.
-Установить dashboard.
-Сгенерировать сертификат для подключения к внешнему ip-адресу.
-Задание 2. Установка и настройка локального kubectl
-Установить на локальную машину kubectl.
-Настроить локально подключение к кластеру.
-Подключиться к дашборду с помощью port-forward.
+
+[Инструкция по установке MicroK8S.](https://microk8s.io/docs/getting-started)
+
+[Инструкция по установке автодополнения kubectl.](https://kubernetes.io/ru/docs/reference/kubectl/cheatsheet/#bash)
+
+[Шпаргалка по kubectl.](https://kubernetes.io/ru/docs/reference/kubectl/cheatsheet/)
+
+---
+
+### Задание 1. Установка MicroK8S
+1. Установить MicroK8S на локальную машину или на удалённую виртуальную машину.
+2. Установить dashboard.
+3. Сгенерировать сертификат для подключения к внешнему ip-адресу.
+
+### Ответ 1.
+
+
+
+### Задание 2. Установка и настройка локального kubectl
+1. Установить на локальную машину kubectl.
+2. Настроить локально подключение к кластеру.
+3. Подключиться к дашборду с помощью port-forward.
 
