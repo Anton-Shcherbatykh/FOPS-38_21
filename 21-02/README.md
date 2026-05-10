@@ -43,4 +43,28 @@
 
 ### Ответ 1.
 
-1. 
+1. В текстовом редакторе Notepad++ на локальной машине создаю YAML-манифесты Pod ```netology-web``` и Service ```netology-svc```. Использую *image — gcr.io/kubernetes-e2e-test-images/echoserver:2.2*
+
+![alt text](Pictures/pic011.jpg)
+
+![alt text](Pictures/pic012.jpg)
+
+2. Применяю эти манифесты
+
+![alt text](Pictures/pic05.jpg)
+
+3. Проверяю, что Pod и Service созданы ```kubectl get pods``` и ```kubectl get svc netology-svc```
+
+![alt text](Pictures/pic06.jpg)
+
+![alt text](Pictures/pic07.jpg)
+
+4. Подключаюсь к Service через ```port-forward```
+
+![alt text](Pictures/pic08.jpg)
+
+5. Подключился локально к Service с помощью ```kubectl port-forward``` и вывел значение (и через curl и в браузере)
+
+![alt text](Pictures/pic09.jpg)
+
+![alt text](Pictures/pic010.jpg)
