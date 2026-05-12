@@ -13,7 +13,7 @@
 
 1. Создаю Deployment (манифест с названием deploy-err_port.yaml)
 
-![alt text](Pictures/pic01.jpg)
+![alt text](Pictures/pic03.jpg)
 
 Применяю его. Получаю предупреждение о том, что есть проблема с портом (что верно, т.к. создан Deployment в котором оба контейнера на порту 80).
 
@@ -21,6 +21,6 @@
 
 Проверяю статус пода и вижу следующую картину:
 
-![alt text](Pictures/pic01.jpg)
+![alt text](Pictures/pic02.jpg)
 
 2. 
