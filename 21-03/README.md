@@ -22,7 +22,8 @@
 
 ![alt text](Pictures/pic02.jpg)
 
-Исправляем ситуацию, явно указав multitool использовать порт 1180 (создадим новый манифест с названием ...)
+Исправляем ситуацию, явно указав multitool использовать порт 1180 
+Создаю новый [Манифест](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-03/Files/deploy_good_port.yaml)
 
 ![alt text](Pictures/pic05.jpg)
 
