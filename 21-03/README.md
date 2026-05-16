@@ -10,7 +10,7 @@
 
 ### Ответ 1.
 
-Создаю Deployment (манифест с названием deploy-err_port.yaml)
+Создаю [Deployment](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-03/Files/deploy_error_port.yaml)
 
 ![alt text](Pictures/pic03.jpg)
 
