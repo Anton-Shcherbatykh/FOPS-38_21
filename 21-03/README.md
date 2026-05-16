@@ -45,3 +45,29 @@
 Проверяю с помощью curl, что из пода есть доступ до приложений из п.1
 
 ![alt text](Pictures/pic09.jpg)
+
+---
+
+### Задание 2. Создать Deployment и обеспечить старт основного контейнера при выполнении условий
+
+1. Создать Deployment приложения nginx и обеспечить старт контейнера только после того, как будет запущен сервис этого приложения.
+2. Убедиться, что nginx не стартует. В качестве Init-контейнера взять busybox.
+3. Создать и запустить Service. Убедиться, что Init запустился.
+4. Продемонстрировать состояние пода до и после запуска сервиса.
+
+### Ответ 2.
+
+Создаю [манифест Deployment с init-контейнером](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-03/Files/deployment-with-init.yaml)
+
+Применяю Deployment и смотрю состояние Pod'а. Вижу, что Pod находится в состоянии ```Init:0/1```
+
+![alt text](Pictures/pic010.jpg)
+
+Проверяю логи init-контейнера. Вижу, что nginx не стартует.
+
+![alt text](Pictures/pic011.jpg)
+
+Создаю [манифест Service](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-03/Files/service.yaml)
+
+![alt text](Pictures/pic012.jpg)
+
