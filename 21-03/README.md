@@ -71,3 +71,23 @@
 
 ![alt text](Pictures/pic012.jpg)
 
+Наблюдаю за запуском ```microk8s kubectl get pods -w```
+
+![alt text](Pictures/pic014.jpg)
+
+Смотрим информацию о завершённом init-контейнере ```microk8s kubectl describe pod nginx-with-init-6fdc5f9755-5zgf4```
+
+Нахожу в выводе секцию ```Init Containers``` → ```wait-for-service```
+
+```bash
+State:          Terminated
+  Reason:       Completed
+  Exit Code:    0
+```
+
+Это нам показыает, что init-контейнер успешно завершился после того, как сервис стал доступен.
+
+![alt text](Pictures/pic013.jpg)
+
+
+
