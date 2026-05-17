@@ -109,6 +109,8 @@ microk8s kubectl apply -f service-clusterip.yaml
 microk8s kubectl get svc web-svc-clusterip
 ```
 
+![alt text](Pictures/pic02.jpg)
+
 3. Проверка доступа изнутри кластера (через тестовый под)
 
 Создаю временный под с multitool и выполняю curl:
