@@ -77,39 +77,9 @@
 
 ### Ответ 1.
 
-1. Создаю манифест Deployment с двумя контейнерами и 3 репликами
-Файл: deployment-multi-container.yaml
+1. Создаю манифест [Deployment с двумя контейнерами и 3 репликами](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-04/Files/deployment-multi-container.yaml)
 
- ```bash
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: web-deployment
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: web-app
-  template:
-    metadata:
-      labels:
-        app: web-app
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:latest
-        ports:
-        - containerPort: 80
-      - name: multitool
-        image: wbitt/network-multitool:latest
-        env:
-        - name: HTTP_PORT
-          value: "8080"
-        ports:
-        - containerPort: 8080
-```
-
-Пояснение: multitool по умолчанию слушает порт 80, но переменная HTTP_PORT=8080 заставляет его использовать порт 8080. Это исключит конфликт с nginx.
+*Пояснение: multitool по умолчанию слушает порт 80, но переменная HTTP_PORT=8080 заставляет его использовать порт 8080. Это исключит конфликт с nginx.*
 
 Применяю:
 
