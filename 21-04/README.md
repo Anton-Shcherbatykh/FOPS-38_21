@@ -160,3 +160,11 @@ microk8s kubectl get svc web-svc-nodeport
 Вижу страницу ```Welcome to nginx!```
 
 ![alt text](Pictures/pic07.jpg)
+
+При обращении из командной строки
+
+![alt text](Pictures/pic08.jpg)
+
+---
+
+### Ответ 2.
