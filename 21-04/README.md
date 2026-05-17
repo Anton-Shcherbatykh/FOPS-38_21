@@ -123,6 +123,11 @@ microk8s kubectl run test-pod --image=wbitt/network-multitool --rm -it --restart
 
 ```bash
 curl http://web-svc-clusterip:9001   # Должна появиться страница nginx
+```
+
+
+
+```bash
 curl http://web-svc-clusterip:9002   # Должна появиться информация от multitool
 ```
 
