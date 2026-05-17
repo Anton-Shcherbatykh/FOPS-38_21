@@ -95,28 +95,7 @@ microk8s kubectl get pods -l app=web-app
 
 ![alt text](Pictures/pic01.jpg)
 
-2. Создаю Service типа ClusterIP (два порта)
-Файл: service-clusterip.yaml
-
-```bash
-apiVersion: v1
-kind: Service
-metadata:
-  name: web-svc-clusterip
-spec:
-  type: ClusterIP
-  selector:
-    app: web-app
-  ports:
-  - name: nginx-port
-    protocol: TCP
-    port: 9001
-    targetPort: 80
-  - name: multitool-port
-    protocol: TCP
-    port: 9002
-    targetPort: 8080
-```
+2. Создаю [Service типа ClusterIP (два порта)](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-04/Files/service-clusterip.yaml)
 
 Применяю:
 
