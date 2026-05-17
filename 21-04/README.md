@@ -125,38 +125,19 @@ microk8s kubectl run test-pod --image=wbitt/network-multitool --rm -it --restart
 curl http://web-svc-clusterip:9001   # Должна появиться страница nginx
 ```
 
-
+![alt text](Pictures/pic03.jpg)
 
 ```bash
 curl http://web-svc-clusterip:9002   # Должна появиться информация от multitool
 ```
 
-Выхожу из пода, набрав exit или нажав Ctrl+D.
+![alt text](Pictures/pic04.jpg)
 
-Под автоматически удалится.
+Выхожу из пода, набрав exit. Под автоматически удалился.
 
-Скриншот вывода curl прикладываю к отчёту.
+![alt text](Pictures/pic05.jpg)
 
-4. Создаю Service типа NodePort для доступа к nginx снаружи
-5. 
-Файл: service-nodeport.yaml
-
-```bash
-apiVersion: v1
-kind: Service
-metadata:
-  name: web-svc-nodeport
-spec:
-  type: NodePort
-  selector:
-    app: web-app
-  ports:
-  - name: nginx-port
-    protocol: TCP
-    port: 80
-    targetPort: 80
-    nodePort: 30080   # можно указать явно, либо Kubernetes назначит в диапазоне 30000-32767
-```
+4. Создаю [Service типа NodePort](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-04/Files/service-nodeport.yaml) *для доступа к nginx "снаружи"*
 
 Применяю:
 
@@ -164,13 +145,13 @@ spec:
 microk8s kubectl apply -f service-nodeport.yaml
 ```
 
-Узнаю назначенный порт (если не указал 30080):
+Узнаю назначенный порт:
 
 ```bash
 microk8s kubectl get svc web-svc-nodeport
 ```
 
-В колонке PORT(S) будет что-то вроде 80:30080/TCP.
+![alt text](Pictures/pic06.jpg)
 
 5. Проверка доступа с локального компьютера (хоста Windows)
 
