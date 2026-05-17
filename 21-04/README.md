@@ -123,7 +123,7 @@ microk8s kubectl apply -f deployment-multi-container.yaml
 microk8s kubectl get pods -l app=web-app
 ```
 
-Каждый под должен иметь статус Running и 2/2 READY.
+![alt text](Pictures/pic01.jpg)
 
 2. Создаю Service типа ClusterIP (два порта)
 Файл: service-clusterip.yaml
