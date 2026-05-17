@@ -168,3 +168,82 @@ microk8s kubectl get svc web-svc-nodeport
 ---
 
 ### Ответ 2.
+
+1. Включаю Ingress-контроллер
+```bash
+microk8s enable ingress
+```
+
+Проверяю его запуск
+
+```bash
+microk8s kubectl get pods -n ingress
+```
+
+![alt text](Pictures/pic09.jpg)
+
+2. Создаю [Deployment](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-04/Files/deployment-frontend.yaml) и [Service](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-04/Files/service-frontend.yaml) для frontend (nginx)
+
+Применяю:
+
+```bash
+microk8s kubectl apply -f deployment-frontend.yaml
+microk8s kubectl apply -f service-frontend.yaml
+```
+
+3. Создаю [Deployment](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-04/Files/deployment-backend.yaml) и [Service](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-04/Files/service-backend.yaml) для backend (multitool)
+
+Применяю:
+
+```bash
+microk8s kubectl apply -f deployment-backend.yaml
+microk8s kubectl apply -f service-backend.yaml
+```
+
+Результат применения для п.п.2 и 3
+
+![alt text](Pictures/pic010.jpg)
+
+4. Создал [Ingress](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-04/Files/ingress.yaml) с правилами маршрутизации
+
+*Важно: для того чтобы путь /api корректно пробрасывался на backend без префикса /api, использовал аннотацию rewrite-target: /. Это убирает /api из запроса перед передачей в backend.*
+
+Пояснение: Ingress-контроллер nginx, поставляемый с MicroK8s, поддерживает эту аннотацию. Запросы на /api/something будут перенаправляться в backend-сервис на /something.
+
+Применяю:
+
+```bash
+microk8s kubectl apply -f ingress.yaml
+```
+
+![alt text](Pictures/pic011.jpg)
+
+5. Проверяю доступность
+
+Узнаю IP-адрес, на котором слушает Ingress
+
+```bash
+microk8s kubectl get ingress
+```
+
+![alt text](Pictures/pic012.jpg)
+
+Т.к. Ingress адрес — 127.0.0.1 (доступ только внутри ВМ), то выполняю запросы с самой ВМ:
+
+```bash
+curl http://localhost/
+```
+
+![alt text](Pictures/pic013.jpg)
+
+```bash
+curl http://localhost/api
+```
+
+![alt text](Pictures/pic014.jpg)
+
+Для "чистоты эксперимента" проверяю доступность с локальной машины под управлением Windows (для этого настроил проброс портов (хост:8080 -> гость:80)).
+
+![alt text](Pictures/pic015.jpg)
+
+![alt text](Pictures/pic016.jpg)
