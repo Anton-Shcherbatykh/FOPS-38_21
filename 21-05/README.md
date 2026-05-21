@@ -52,3 +52,4 @@
 
 ![alt text](Pictures/pic05_1.jpg)
 
+[Манифест к заданию 1](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-05/Files/containers-data-exchange.yaml)
