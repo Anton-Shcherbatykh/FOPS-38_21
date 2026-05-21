@@ -1,0 +1,74 @@
+---
+# 1. PersistentVolume (статический, локальная папка на ноде)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: manual-pv-for-sc
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual-sc   # должно совпадать с именем StorageClass
+  hostPath:
+    path: /mnt/k8s-storage-sc
+    type: DirectoryOrCreate
+---
+# 2. StorageClass (без динамического provisioner)
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: manual-sc
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer   # PVC привяжется только после появления пода
+---
+# 3. PersistentVolumeClaim (ссылается на StorageClass)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sc-pvc
+spec:
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi   # меньше или равно 1Gi
+  storageClassName: manual-sc
+---
+# 4. Deployment (два контейнера: busybox пишет, multitool читает)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-exchange-sc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-exchange-sc
+  template:
+    metadata:
+      labels:
+        app: data-exchange-sc
+    spec:
+      volumes:
+      - name: shared-storage
+        persistentVolumeClaim:
+          claimName: sc-pvc
+      containers:
+      - name: busybox-writer
+        image: busybox:latest
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo $(date) 'Hello from busybox (SC)' >> /data/shared.log; sleep 5; done"]
+        volumeMounts:
+        - name: shared-storage
+          mountPath: /data
+      - name: multitool-reader
+        image: wbitt/network-multitool:latest
+        command: ["/bin/sh"]
+        args: ["-c", "tail -f /data/shared.log"]
+        volumeMounts:
+        - name: shared-storage
+          mountPath: /data

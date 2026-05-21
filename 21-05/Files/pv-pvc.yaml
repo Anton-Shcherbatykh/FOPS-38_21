@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain   # чтобы после удаления PVC файлы не удалялись
+  storageClassName: manual                # свой класс, не default
+  hostPath:
+    path: /mnt/k8s-storage
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: manual-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: manual
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-exchange-pv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-exchange-pv
+  template:
+    metadata:
+      labels:
+        app: data-exchange-pv
+    spec:
+      volumes:
+      - name: shared-storage
+        persistentVolumeClaim:
+          claimName: manual-pvc
+      containers:
+      - name: busybox-writer
+        image: busybox:latest
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo $(date) 'Hello from busybox (PV)' >> /data/shared.log; sleep 5; done"]
+        volumeMounts:
+        - name: shared-storage
+          mountPath: /data
+      - name: multitool-reader
+        image: wbitt/network-multitool:latest
+        command: ["/bin/sh"]
+        args: ["-c", "tail -f /data/shared.log"]
+        volumeMounts:
+        - name: shared-storage
+          mountPath: /data
