@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-content
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>HTTPS + Secret Demo</title>
+    </head>
+    <body>
+      <h1>Hello from Kubernetes with HTTPS!</h1>
+      <p>This page is served via Ingress with TLS.</p>
+    </body>
+    </html>
