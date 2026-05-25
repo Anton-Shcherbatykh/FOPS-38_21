@@ -73,6 +73,8 @@ openssl x509 -req -in developer.csr -CA {CA серт вашего кластер
 
 ---
 
-### Ответ 1.
+### Ответ 0.
 
+Для целей, указанных в "шапке" к заданиям с помощью Terraform развернул ВМ в Yandex.Cloud и установил на ней MikroK8s
 
+![alt text](Pictures/pic00.jpg)
