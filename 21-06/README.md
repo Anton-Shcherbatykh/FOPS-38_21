@@ -78,3 +78,10 @@ openssl x509 -req -in developer.csr -CA {CA серт вашего кластер
 Для целей, указанных в "шапке" к заданиям с помощью Terraform развернул ВМ в Yandex.Cloud и установил на ней MikroK8s
 
 ![alt text](Pictures/pic00.jpg)
+
+### Ответ 1.
+
+Создаю [ConfigMap с HTML-страницей](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/configmap-web.yaml) и применяю
+
+![alt text](Pictures/pic01.jpg)
+
