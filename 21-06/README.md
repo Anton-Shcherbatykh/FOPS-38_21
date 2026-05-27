@@ -101,7 +101,7 @@ openssl x509 -req -in developer.csr -CA {CA серт вашего кластер
 
 ### Ответ 2.
 
-Для "чистоты" эскперимента создаю [Создайте ConfigMap с веб-страницей](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/web-configmap.yaml), а также [Deployment и Service](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/deploy-https.yaml) 
+Для "чистоты" эскперимента создаю [ConfigMap с веб-страницей](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/web-configmap.yaml), а также [Deployment и Service](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/deploy-https.yaml) 
 
 ![alt text](Pictures/pic05.jpg)
 
