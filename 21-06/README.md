@@ -211,8 +211,6 @@ microk8s kubectl config get-contexts
 ```
 ![alt text](Pictures/pic016.jpg)
 
-p.s. на скрине видны "остатки" от выполнения первых двух заданий в данной работе.
-
 Создаю [Role и RoleBinding](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/role-pod-viewer.yaml) и [манифест rolebinding](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/rolebinding.yaml). После создания применяю их.
 
 Скриншот проверки прав
