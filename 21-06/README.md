@@ -165,7 +165,7 @@ echo "111.88.240.72 myapp.example.com" | sudo tee -a /etc/hosts
 Для этого сначала определяю переменные
 
 ```bash
-USER_NAME=developer
+USER_NAME=shcherbatykh
 ```
 
 Пути к CA кластера MicroK8s:
