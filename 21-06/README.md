@@ -81,7 +81,73 @@ openssl x509 -req -in developer.csr -CA {CA серт вашего кластер
 
 ### Ответ 1.
 
-Создаю [ConfigMap с HTML-страницей](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/configmap-web.yaml) и применяю
+Создаю [ConfigMap с HTML-страницей](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/configmap-web.yaml) и применяю, затем создаю [Deployment (nginx + multitool)](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/deployment.yaml) и применяю.
 
 ![alt text](Pictures/pic01.jpg)
 
+Также создаю [Service для доступа к nginx](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/service_curl.yml) 
+
+![alt text](Pictures/pic02.jpg)
+
+После того, как все "подготовительные работы" проведены, проверяю доступность ConfigMaps через multitool (внутри пода).
+
+![alt text](Pictures/pic03.jpg)
+
+после настройки проброса портов проверяю доступность через браузер
+
+![alt text](Pictures/pic04.jpg)
+
+---
+
+### Ответ 2.
+
+Для "чистоты" эскперимента создаю [Создайте ConfigMap с веб-страницей](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/web-configmap.yaml), а также [Deployment и Service](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/deploy-https.yaml) 
+
+![alt text](Pictures/pic05.jpg)
+
+Проверяю POD'ы
+
+![alt text](Pictures/pic06.jpg)
+
+Затем генерирую самоподписанный SSL-сертификат
+
+![alt text](Pictures/pic07.jpg)
+
+Проверяю, что файлы созданы
+
+![alt text](Pictures/pic08.jpg)
+
+Следующим шагом создаю ```secret типа TLS``` командой 
+```bash
+microk8s kubectl create secret tls tls-secret --cert=tls.crt --key=tls.key
+```
+и проверяю, всё ли в порядке с его созданием
+
+![alt text](Pictures/pic09.jpg)
+
+Экспортирую [secret-tls.yaml](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/secret-tls.yaml) командой 
+```bash
+microk8s kubectl get secret tls-secret -o yaml | grep -v '^\s*creationTimestamp:' | grep -v '^\s*resourceVersion:' | grep -v '^\s*uid:' | grep -v '^\s*selfLink:' > secret-tls.yaml
+```
+чтобы приложить к выполнению задания.
+
+Продолжим. Создаю [Ingress](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/ingress-tls.yaml)
+
+![alt text](Pictures/pic010.jpg)
+
+и проверяю, чтобы удостовериться, что не возникло никаких ошибок
+
+![alt text](Pictures/pic011.jpg)
+
+Проверяю https-доступ через ```curl -k```. Поскольку сертификат самоподписанный, используем ключ ```-k``` (insecure). Нужно, чтобы запрос попал на Ingress Controller.
+
+Для этого добавляю запись в /etc/hosts на своей локальной машине (откуда делаю curl)
+```bash
+echo "111.88.240.71 myapp.example.com" | sudo tee -a /etc/hosts
+```
+
+![alt text](Pictures/pic012.jpg)
+
+Затем настраиваю проброс портов и выполняю curl
+
+![alt text](Pictures/pic013.jpg)
