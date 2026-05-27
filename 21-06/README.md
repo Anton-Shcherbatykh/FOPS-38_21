@@ -143,7 +143,7 @@ microk8s kubectl get secret tls-secret -o yaml | grep -v '^\s*creationTimestamp:
 
 Для этого добавляю запись в /etc/hosts на своей локальной машине (откуда делаю curl)
 ```bash
-echo "111.88.240.71 myapp.example.com" | sudo tee -a /etc/hosts
+echo "111.88.240.72 myapp.example.com" | sudo tee -a /etc/hosts
 ```
 
 ![alt text](Pictures/pic012.jpg)
@@ -151,3 +151,70 @@ echo "111.88.240.71 myapp.example.com" | sudo tee -a /etc/hosts
 Затем настраиваю проброс портов и выполняю curl
 
 ![alt text](Pictures/pic013.jpg)
+
+---
+
+### Ответ 3.
+
+Включаю RBAC ```microk8s enable rbac```
+
+![alt text](Pictures/pic014.jpg)
+
+Создаю SSL-сертификат для пользователя **shcherbatykh** (взял на себя смелость заменить предложенного в задании **developer'а**)
+
+Для этого сначала определяю переменные
+
+```bash
+USER_NAME=developer
+```
+
+Пути к CA кластера MicroK8s:
+```bash
+CA_CERT=/var/snap/microk8s/current/certs/ca.crt
+CA_KEY=/var/snap/microk8s/current/certs/ca.key
+```
+Генерирую ключ и CSR, затем подписываю сертификат
+
+```bash
+# 1. Приватный ключ
+openssl genrsa -out shcherbatykh.key 2048
+
+# 2. Certificate Signing Request (CSR)
+openssl req -new -key shcherbatykh.key -out ${USER_NAME}.csr -subj "/CN=shcherbatykh"
+
+# 3. Подпись сертификата с использованием CA кластера
+sudo openssl x509 -req -in shcherbatykh.csr -CA ${CA_CERT} -CAkey ${CA_KEY} -CAcreateserial -out shcherbatykh.crt -days 365
+```
+*скриншот банально забыл сделать*
+
+Проверяю, что файлы появились
+
+![alt text](Pictures/pic015.jpg)
+
+Kubernetes использует ```kubeconfig``` для хранения информации о кластере, пользователях и контекстах. Без него утилита ```kubectl``` не знает:
+
+- Какой API-сервер (адрес кластера) использовать;
+- Какие учётные данные (сертификат, ключ) предъявить для аутентификации;
+- Какой namespace или контекст выбрать.
+
+Поэтому выполняю настройку kubeconfig для пользователя ```shcherbatykh```
+
+```bash
+# Создаю новый контекст для shcherbatykh
+microk8s kubectl config set-credentials shcherbatykh --client-certificate=$(pwd)/shcherbatykh.crt --client-key=$(pwd)/shcherbatykh.key --embed-certs=true
+
+# Устанавливаю контекст для shcherbatykh (будет использоваться текущий кластер)
+microk8s kubectl config set-context shcherbatykh-context --cluster=$(microk8s kubectl config view -o jsonpath='{.clusters[0].name}') --user=shcherbatykh
+
+# Проверяю контексты
+microk8s kubectl config get-contexts
+```
+![alt text](Pictures/pic016.jpg)
+
+p.s. на скрине видны "остатки" от выполнения первых двух заданий в данной работе.
+
+Создаю [Role и RoleBinding](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/role-pod-viewer.yaml) и [манифест rolebinding](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/rolebinding.yaml). После создания применяю их.
+
+Скриншот проверки прав
+
+![alt text](Pictures/pic017.jpg)
