@@ -213,6 +213,6 @@ microk8s kubectl config get-contexts
 
 Создаю [Role и RoleBinding](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/role-pod-viewer.yaml) и [манифест rolebinding](https://github.com/Anton-Shcherbatykh/FOPS-38_21/blob/main/21-06/Files/rolebinding.yaml). После создания применяю их.
 
-Скриншот проверки прав
+Проверяю доступ (скриншот проверки прав)
 
 ![alt text](Pictures/pic017.jpg)
