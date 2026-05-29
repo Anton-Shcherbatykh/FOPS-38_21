@@ -246,7 +246,7 @@ CPU: 2 ядра
 | Production | 3 мастер‑ноды (control plane) | RAM: 8 ГБ CPU: 2 ядра |
 |            | 7 рабочих нод (worker nodes) | RAM: 16 ГБ CPU: 4 ядра |
 |  | |  |
-| Тест (компромисс) | 1 мастер‑нода (с control plane) | RAM: 4–8 ГБ CPU: 2 ядра |
+| Test | 1 мастер‑нода (с control plane) | RAM: 4–8 ГБ CPU: 2 ядра |
 |                   | 7 рабочих нод (worker nodes) | RAM: 16 ГБ CPU: 4 ядра |
 
 **Такой кластер:**
