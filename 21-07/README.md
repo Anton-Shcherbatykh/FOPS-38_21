@@ -87,7 +87,20 @@ helm install test-app2 . --set image.frontend.tag=1.26 --set image.backend.tag=3
 
 ![alt text](Pictures/pic04.jpg)
 
-Устанавливаю первую версию в app1 (релиз myapp-v1 с nginx:1.25, alpine:3.18, 1 реплика), вторую версию (другой релиз) в том же app1 (релиз myapp-v2 с nginx:1.26, alpine:3.19, 2 реплики) и третью версию в другом неймспейсе app2 (релиз myapp-v3 с nginx:1.25, alpine:3.18, 1 реплика)
+Устанавливаю первую версию в app1 (релиз myapp-v1 с nginx:1.25, alpine:3.18, 1 реплика),
+```bash
+helm install myapp-v1 . --namespace app1 --set image.frontend.tag=1.25 --set image.backend.tag=3.18  --set replicaCount=1
+```
+
+вторую версию (другой релиз) в том же app1 (релиз myapp-v2 с nginx:1.26, alpine:3.19, 2 реплики) 
+```bash
+helm install myapp-v2 . --namespace app1 --set image.frontend.tag=1.26 --set image.backend.tag=3.19 --set replicaCount=2
+```
+
+и третью версию в другом неймспейсе app2 (релиз myapp-v3 с nginx:1.25, alpine:3.18, 1 реплика)
+```bash
+helm install myapp-v3 . --namespace app2 --set image.frontend.tag=1.25 --set image.backend.tag=3.18 --set replicaCount=1
+```
 
 Проверяю список релизов в каждом неймспейсе
 
