@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-backend
+  labels:
+    app: {{ .Chart.Name }}
+    component: backend
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+      component: backend
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        component: backend
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: backend
+        image: "{{ .Values.image.backend.repository }}:{{ .Values.image.backend.tag }}"
+        imagePullPolicy: {{ .Values.image.backend.pullPolicy }}
+        command: ["/bin/sh"]
+        args: ["-c", "echo 'Backend is running' && tail -f /dev/null"]
+        env:
+        - name: HTTP_PORT
+          value: "1180"
+        ports:
+        - containerPort: 1180
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}

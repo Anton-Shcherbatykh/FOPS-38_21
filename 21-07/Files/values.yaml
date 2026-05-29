@@ -1,0 +1,29 @@
+replicaCount: 1
+
+image:
+  frontend:
+    repository: nginx
+    tag: "1.25"
+    pullPolicy: IfNotPresent
+  backend:
+    repository: alpine
+    tag: "3.18"
+    pullPolicy: IfNotPresent
+
+service:
+  frontend:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+  backend:
+    type: ClusterIP
+    port: 80
+    targetPort: 1180
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
