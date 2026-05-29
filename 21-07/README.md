@@ -71,3 +71,8 @@ helm install test-app2 . --set image.frontend.tag=1.26 --set image.backend.tag=3
 ```
 
 ![alt text](Pictures/pic08.jpg)
+
+Проверяю, что поды используют нужные образы:
+
+![alt text](Pictures/pic09.jpg)
+
