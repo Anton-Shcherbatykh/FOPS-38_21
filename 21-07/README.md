@@ -81,10 +81,24 @@ helm install test-app2 . --set image.frontend.tag=1.26 --set image.backend.tag=3
 
 Проверяю, что чарт готов и находится в директории /myapp
 
-
+![alt text](Pictures/pic010.jpg)
 
  Создаю неймспейсы app1 и app2
 
- ![alt text](Pictures/pic04.jpg)
+![alt text](Pictures/pic04.jpg)
 
- 
+Устанавливаю первую версию в app1 (релиз myapp-v1 с nginx:1.25, alpine:3.18, 1 реплика), вторую версию (другой релиз) в том же app1 (релиз myapp-v2 с nginx:1.26, alpine:3.19, 2 реплики) и третью версию в другом неймспейсе app2 (релиз myapp-v3 с nginx:1.25, alpine:3.18, 1 реплика)
+
+Проверяю список релизов в каждом неймспейсе
+
+![alt text](Pictures/pic05.jpg)
+
+Проверяю поды в неймспейсах
+
+![alt text](Pictures/pic06.jpg)
+
+Проверяю версии образов для каждого релиза
+
+![alt text](Pictures/pic07.jpg)
+
+
