@@ -76,3 +76,15 @@ helm install test-app2 . --set image.frontend.tag=1.26 --set image.backend.tag=3
 
 ![alt text](Pictures/pic09.jpg)
 
+
+### Ответ 2.
+
+Проверяю, что чарт готов и находится в директории /myapp
+
+
+
+ Создаю неймспейсы app1 и app2
+
+ ![alt text](Pictures/pic04.jpg)
+
+ 
