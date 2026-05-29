@@ -59,3 +59,15 @@ rm -rf templates/tests
 Проверяю чарт и упаковываю его 
 
 ![alt text](Pictures/pic03.jpg)
+
+Чтобы показать изменение версии образа устанавливаю чарт с разными тегами:
+
+```bash
+# Установка с nginx:1.25
+helm install test-app . --set image.frontend.tag=1.25 --set image.backend.tag=3.18
+
+# Установка с nginx:1.26
+helm install test-app2 . --set image.frontend.tag=1.26 --set image.backend.tag=3.19
+```
+
+![alt text](Pictures/pic08.jpg)
