@@ -21,8 +21,8 @@
 
 ```bash
 # 1.1 Отключаем Swap (В официальной документации Kubernetes и лучших практиках сообщества настоятельно рекомендуется отключать
-swap на нодах, где планируется запускать рабочую нагрузку Kubernetes. Это считается стандартной практикой для поддержания
-стабильности и производительности кластера.)
+# swap на нодах, где планируется запускать рабочую нагрузку Kubernetes. Это считается стандартной практикой для поддержания
+# стабильности и производительности кластера.)
 sudo swapoff -a
 sudo sed -i '/ swap / s/^/#/' /etc/fstab
 
@@ -48,7 +48,7 @@ sudo sysctl --system
 sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl
 
 # 1.6 Устанавливаю containerd в качестве CRI (это позволит обеспечить взаимодействие между компонентами кластера
-и средой выполнения контейнеров).
+# и средой выполнения контейнеров).
 sudo apt-get install -y containerd
 ```
 
@@ -62,7 +62,7 @@ sudo mkdir -p /etc/containerd
 containerd config default | sudo tee /etc/containerd/config.toml
 
 # 2.2 Настройка systemd в качестве cgroup driver ( для корректного управления ресурсами и предотвращения
-конфликтов в системе)
+# конфликтов в системе)
 sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
 
 # 2.3 Перезапуск containerd
@@ -90,8 +90,8 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 
 # 3.3 Блокирую версии для предотвращения автоматического обновления (В Kubernetes существует политика
-допустимого расхождения версий между некоторыми компонентами (например, между ```kube-apiserver```, ```kubelet``` и ```kubectl```).
-Блокировка версий помогает поддерживать согласованность между компонентами, что снижает риск конфликтов при обновлении).
+# допустимого расхождения версий между некоторыми компонентами (например, между ```kube-apiserver```, ```kubelet``` и ```kubectl```).
+# Блокировка версий помогает поддерживать согласованность между компонентами, что снижает риск конфликтов при обновлении).
 sudo apt-mark hold kubelet kubeadm kubectl
 sudo systemctl enable --now kubelet
 ```
