@@ -126,7 +126,7 @@ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/
 Теперь можно заняться подключением зависимых (я их назвал worker) узлов
 
 ```bash
-sudo kubeadm join 10.0.1.14:6443 --token 3fj96f.awv38huvgemz1n3e --discovery-token-ca-cert-hash sha256:0e7de495fea037f15724103ee7f37b0eda5a99e2cabff48acecb924aedbfbbc6
+sudo kubeadm join 10.0.1.14:6443 --token 8bhhu8.v4ccn29mfz0nmbsv --discovery-token-ca-cert-hash sha256:0e7de495fea037f15724103ee7f37b0eda5a99e2cabff48acecb924aedbfbbc6
 ```
 
 После подключения всех 4 worker-узлов, проверяю состояние кластера с master-узла.
