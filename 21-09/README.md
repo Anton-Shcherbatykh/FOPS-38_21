@@ -166,9 +166,7 @@ kubectl expose deployment nginx --port=80 --type=NodePort
 curl http://10.0.1.19:30613
 ```
 
-c мастер-узла
-
-и получаю
+c мастер-узла и получаю
 
 ![alt text](Pictures/pic00_1.jpg)
 
