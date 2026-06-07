@@ -13,4 +13,5 @@
 
 Для выполнения задания развернул 5 ВМ в Yandex.Cloud
 
+![alt text](Pictures/pic00.jpg)
 
