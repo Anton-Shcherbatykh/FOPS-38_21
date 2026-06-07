@@ -11,7 +11,7 @@
 
 ### Ответ 1.
 
-Для выполнения задания развернул 5 5 виртуальных машин (ВМ) с Ubuntu 20.04 LTS в Yandex.Cloud, которые имеют сетевой доступ друг к другу.
+Для выполнения задания развернул 5 виртуальных машин (ВМ) с Ubuntu 20.04 LTS в Yandex.Cloud, которые имеют сетевой доступ друг к другу.
 
 ![alt text](Pictures/pic00.jpg)
 
@@ -101,7 +101,78 @@ sudo systemctl enable --now kubelet
 После настройки всех ВМ приступаю к инициализации master-узла.
 
 ```bash
-
-sudo kubeadm init --apiserver-advertise-address=<ВАШ_IP_МАСТЕРА> --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init --apiserver-advertise-address=158.160.34.141 --pod-network-cidr=10.244.0.0/16
 ```
 
+Получаю сообщение (см скриншот ниже) об успешной инициализации и сохраняю данные ```kubeadm join```
+
+![alt text](Pictures/pic04.jpg)
+
+и выполняю следующие команды, чтобы начать использовать кластер
+
+```bash
+# Настраиваю kubectl для текущего пользователя (у меня это ubuntu)
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+Устанавливаю сетевой плагин (CNI) для связи между подами. 
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
+```
+
+Теперь можно заняться подключением зависимых (я их назвал worker) узлов
+
+```bash
+sudo kubeadm join 10.0.1.14:6443 --token 3fj96f.awv38huvgemz1n3e --discovery-token-ca-cert-hash sha256:08032416b44d0f44bb8408e5d80394e283982146276956116b566fae3ad8f2f7
+```
+
+После подключения всех 4 worker-узлов, проверяю состояние кластера с master-узла.
+
+```bash
+# Смотрю все узлы кластера (д.б. статус Ready для всех 5 узлов)
+kubectl get nodes
+
+# Смотрю все поды в системном пространстве имен (все поды должны быть в статусе Running)
+kubectl get pods -n kube-system
+```
+
+![alt text](Pictures/pic05.jpg)
+
+Вижу, что кластер успешно установлен и готов к работе.
+
+Чтобы убедиться, что кластер полностью работоспособен, разворачиваю тестовое приложение на мастер-узле:
+
+```bash
+kubectl create deployment nginx --image=nginx
+kubectl expose deployment nginx --port=80 --type=NodePort
+```
+
+После этого получаю список сервисов командой ```kubectl get svc``` 
+
+![alt text](Pictures/pic06.jpg)
+
+и, взяв значение NodePort, открываю в браузере своей локальной ВМ страницу http://111.88.254.168:30613 (ip-адрес worker-узла №3), и вижу приветственную страницу Nginx. 
+
+![alt text](Pictures/pic01_1.jpg)
+
+![alt text](Pictures/pic07_1.jpg)
+
+Также проверяю это командой 
+
+```bash
+curl http://10.0.1.19:30613
+```
+
+c мастер-узла
+
+и получаю
+
+![alt text](Pictures/pic00_1.jpg)
+
+![alt text](Pictures/pic08_1.jpg)
+
+
+Данный результат подтверждает, что всё настроено и работает корректно.
