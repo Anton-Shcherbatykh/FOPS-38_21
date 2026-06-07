@@ -97,3 +97,8 @@ sudo systemctl enable --now kubelet
 ```
 
 ![alt text](Pictures/pic03.jpg)
+
+После настройки всех ВМ приступаю к инициализации master-узла.
+
+
+
